@@ -10,3 +10,5 @@ Thumbs.db
 *.geojson
 *.zip
 *.tar.gz
+
+cnn/model/*.pt
