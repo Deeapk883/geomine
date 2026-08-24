@@ -27,3 +27,9 @@ env/
 *.tar.gz
 
 cnn/model/*.pt
+
+# Environment / secrets
+.env
+.env.local
+.env.*.local
+**/.env
