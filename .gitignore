@@ -5,6 +5,21 @@ Thumbs.db
 .vscode/
 .idea/
 
+# Node modules & build folders
+node_modules/
+.next/
+dist/
+build/
+
+# Python / Cache / Virtualenvs
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+
 # Data files / exports
 *.csv
 *.geojson

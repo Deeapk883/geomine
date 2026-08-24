@@ -1,0 +1,14 @@
+fastapi>=0.110.0
+uvicorn>=0.28.0
+torch
+torchvision
+earthengine-api
+rasterio
+shapely
+pyproj
+numpy
+pillow
+google-genai
+python-dotenv
+pydantic
+pydantic-settings>=2.0.0

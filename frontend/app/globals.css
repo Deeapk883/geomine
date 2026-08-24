@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #0b0f17;
+  color: #f8fafc;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  overflow: hidden;
+}
+
+/* Custom Leaflet Controls & Geoman Dark Override */
+.leaflet-container {
+  width: 100%;
+  height: calc(100vh - 56px);
+  background: #0b0f17 !important;
+}
+
+/* Ensure Leaflet controls don't overlap the navbar */
+.leaflet-top {
+  top: 8px;
+}
+
+.leaflet-control-container .leaflet-top.leaflet-left {
+  top: 8px;
+  left: 8px;
+}
+
+.leaflet-pm-toolbar {
+  background: rgba(15, 23, 42, 0.85) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(8px);
+  border-radius: 8px !important;
+}
+
+.leaflet-pm-toolbar a {
+  background-color: transparent !important;
+  border: none !important;
+  color: #f8fafc !important;
+}
+
+.leaflet-pm-toolbar a:hover {
+  background-color: rgba(245, 158, 11, 0.2) !important;
+}
