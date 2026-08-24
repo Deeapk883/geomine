@@ -1,15 +1,15 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
-import { 
-  Sparkles, 
-  X, 
-  Send, 
-  UploadCloud, 
-  MapPin, 
-  Image as ImageIcon, 
-  Loader2, 
-  Pickaxe, 
+import {
+  Sparkles,
+  X,
+  Send,
+  UploadCloud,
+  MapPin,
+  Image as ImageIcon,
+  Loader2,
+  Pickaxe,
   MessageSquare,
   Trash2,
   CheckCircle2,
@@ -32,13 +32,13 @@ export const GeminiChatBot: React.FC = () => {
       id: 'welcome-msg',
       sender: 'gemini',
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      text: 'Hello! I am your Gemini Mining Intelligence Assistant. Drop a map screenshot or pit image and specify the rough location/area — I will identify what is being mined!'
+      text: 'Hello! I am your GeoLens Intelligence Assistant. Drop a map screenshot or pit image and specify the rough location/area — I will identify what is being mined!'
     }
   ]);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  
+
   const roiCoordinates = useMineStore((state) => state.roiCoordinates);
 
   const scrollToBottom = () => {
@@ -129,7 +129,7 @@ export const GeminiChatBot: React.FC = () => {
         id: `error-${Date.now()}`,
         sender: 'gemini',
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        text: `⚠️ Analysis failed: ${err?.message || 'Could not communicate with Gemini API.'}`
+        text: `⚠️ Analysis failed: ${err?.message || 'Could not communicate with GeoLens API.'}`
       };
       setMessages((prev) => [...prev, errorMsg]);
     } finally {
@@ -145,20 +145,20 @@ export const GeminiChatBot: React.FC = () => {
         <button
           onClick={() => setIsOpen(true)}
           className="absolute bottom-6 right-6 z-[9999] flex items-center gap-2.5 px-4 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white rounded-full shadow-2xl shadow-emerald-950/60 border border-emerald-400/40 transition-all duration-300 transform hover:scale-105 group"
-          title="Open Gemini Mining Chatbot"
+          title="Open GeoLens Chatbot"
         >
           <div className="relative">
             <Sparkles className="w-5 h-5 text-emerald-200 animate-pulse" />
             <span className="absolute -top-1 -right-1 w-2 h-2 bg-emerald-300 rounded-full animate-ping" />
           </div>
-          <span className="font-semibold text-sm tracking-wide font-sans">Gemini Mining AI</span>
+          <span className="font-semibold text-sm tracking-wide font-sans">GeoLens</span>
         </button>
       )}
 
       {/* Floating Chat Modal Panel */}
       {isOpen && (
         <div className="absolute bottom-6 right-6 z-[9999] w-[420px] max-w-[calc(100vw-2rem)] h-[600px] max-h-[calc(100vh-4rem)] flex flex-col bg-slate-900/95 backdrop-blur-xl border border-slate-700/70 rounded-2xl shadow-2xl overflow-hidden font-sans text-slate-100 animate-in fade-in slide-in-from-bottom-5 duration-300">
-          
+
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-3.5 bg-slate-800/80 border-b border-slate-700/60">
             <div className="flex items-center gap-2.5">
@@ -167,7 +167,7 @@ export const GeminiChatBot: React.FC = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-sm leading-none text-slate-100 flex items-center gap-1.5">
-                  Gemini Mining Chatbot
+                  GeoLens Chatbot
                   <span className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[10px] font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
                     Live AI
                   </span>
@@ -183,7 +183,7 @@ export const GeminiChatBot: React.FC = () => {
                     id: 'welcome-msg',
                     sender: 'gemini',
                     timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-                    text: 'Hello! I am your Gemini Mining Intelligence Assistant. Drop a map screenshot or pit image and specify the rough location/area — I will identify what is being mined!'
+                    text: 'Hello! I am your GeoLens Intelligence Assistant. Drop a map screenshot or pit image and specify the rough location/area — I will identify what is being mined!'
                   }
                 ])}
                 className="p-1.5 hover:bg-slate-700/60 text-slate-400 hover:text-slate-200 rounded-lg transition-colors"
@@ -202,7 +202,7 @@ export const GeminiChatBot: React.FC = () => {
           </div>
 
           {/* Chat Messages Feed */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-transparent">
+          <div className="flex-1 overflow-y-auto overscroll-contain p-4 space-y-4 scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-transparent">
             {messages.map((msg) => (
               <div
                 key={msg.id}
@@ -210,17 +210,16 @@ export const GeminiChatBot: React.FC = () => {
               >
                 <div className="flex items-center gap-1.5 mb-1 px-1">
                   <span className="text-[10px] font-medium text-slate-400">
-                    {msg.sender === 'user' ? 'You' : 'Gemini AI'}
+                    {msg.sender === 'user' ? 'You' : 'GeoLens AI'}
                   </span>
                   <span className="text-[10px] text-slate-500">• {msg.timestamp}</span>
                 </div>
 
                 <div
-                  className={`max-w-[90%] rounded-2xl p-3.5 text-xs leading-relaxed border ${
-                    msg.sender === 'user'
+                  className={`max-w-[90%] rounded-2xl p-3.5 text-xs leading-relaxed border ${msg.sender === 'user'
                       ? 'bg-emerald-950/40 border-emerald-700/50 text-emerald-100 rounded-tr-none'
                       : 'bg-slate-800/90 border-slate-700/70 text-slate-200 rounded-tl-none shadow-lg'
-                  }`}
+                    }`}
                 >
                   {/* User attached location pill */}
                   {msg.location && (
@@ -257,13 +256,12 @@ export const GeminiChatBot: React.FC = () => {
                           </div>
                         </div>
                         <span
-                          className={`px-2 py-0.5 text-[10px] font-bold rounded-full border ${
-                            msg.analysis.confidence === 'High'
+                          className={`px-2 py-0.5 text-[10px] font-bold rounded-full border ${msg.analysis.confidence === 'High'
                               ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
                               : msg.analysis.confidence === 'Medium'
-                              ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
-                              : 'bg-rose-500/20 text-rose-300 border-rose-500/40'
-                          }`}
+                                ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
+                                : 'bg-rose-500/20 text-rose-300 border-rose-500/40'
+                            }`}
                         >
                           {msg.analysis.confidence} Confidence
                         </span>
@@ -307,7 +305,7 @@ export const GeminiChatBot: React.FC = () => {
             {isAnalyzing && (
               <div className="flex flex-col items-start">
                 <div className="flex items-center gap-1.5 mb-1 px-1">
-                  <span className="text-[10px] font-medium text-emerald-400">Gemini AI</span>
+                  <span className="text-[10px] font-medium text-emerald-400">GeoLens AI</span>
                 </div>
                 <div className="bg-slate-800/90 border border-slate-700/70 text-slate-200 rounded-2xl rounded-tl-none p-3.5 text-xs flex items-center gap-2.5 shadow-lg">
                   <Loader2 className="w-4 h-4 text-emerald-400 animate-spin" />
@@ -321,7 +319,7 @@ export const GeminiChatBot: React.FC = () => {
 
           {/* Input Controls */}
           <div className="p-3 bg-slate-800/90 border-t border-slate-700/70 space-y-2.5">
-            
+
             {/* Image Dropzone / Preview */}
             {selectedImage ? (
               <div className="flex items-center justify-between p-2 bg-emerald-950/40 border border-emerald-600/40 rounded-xl">
@@ -381,7 +379,7 @@ export const GeminiChatBot: React.FC = () => {
             <div className="flex items-center gap-2">
               <input
                 type="text"
-                placeholder="Ask Gemini (optional text)..."
+                placeholder="Ask GeoLens (optional text)..."
                 value={messageInput}
                 onChange={(e) => setMessageInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && !isAnalyzing && handleSend()}
@@ -391,7 +389,7 @@ export const GeminiChatBot: React.FC = () => {
                 onClick={handleSend}
                 disabled={isAnalyzing || (!selectedImage && !locationInput.trim() && !messageInput.trim())}
                 className="p-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-xl shadow-md transition-all duration-200"
-                title="Send to Gemini"
+                title="Send to GeoLens"
               >
                 {isAnalyzing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
               </button>

@@ -21,7 +21,6 @@ export const Navbar: React.FC = () => {
         </div>
         <div>
           <h1 className="font-black tracking-wider text-slate-100 text-base uppercase">GeoMine AI</h1>
-          <p className="text-[10px] text-slate-400 font-mono">Sentinel-2 • EfficientNet-B0 • Gemini 2.5</p>
         </div>
       </div>
 

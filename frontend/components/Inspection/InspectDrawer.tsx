@@ -9,7 +9,7 @@ export const InspectDrawer: React.FC = () => {
   if (!isInspecting || !selectedPit) return null;
 
   return (
-    <div className="absolute top-4 right-4 bottom-6 w-96 z-[1000] bg-dark-900/95 backdrop-blur-xl border border-slate-700/70 rounded-2xl p-5 shadow-2xl flex flex-col overflow-y-auto">
+    <div className="absolute top-4 right-4 bottom-6 w-96 z-[1000] bg-dark-900/95 backdrop-blur-xl border border-slate-700/70 rounded-2xl p-5 shadow-2xl flex flex-col overflow-y-auto overscroll-contain">
       <div>
         {/* Header */}
         <div className="flex items-center justify-between pb-4 border-b border-slate-700/60">
