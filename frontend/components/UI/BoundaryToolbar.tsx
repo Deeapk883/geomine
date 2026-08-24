@@ -9,6 +9,9 @@ export const BoundaryToolbar: React.FC = () => {
     setDrawingMode,
     leaseBoundary,
     clearLeaseBoundary,
+    roiCoordinates,
+    resetScan,
+    clearAll,
     encroachmentResult,
     isCheckingBoundary
   } = useMineStore();
@@ -41,6 +44,24 @@ export const BoundaryToolbar: React.FC = () => {
           <span>Draw Lease Boundary</span>
         </button>
       </div>
+
+      {/* ROI Active Status Pill */}
+      {roiCoordinates && (
+        <div className="flex items-center gap-2 pl-2 pr-1 border-l border-slate-700/60">
+          <div className="flex items-center gap-1.5 px-2.5 py-1 bg-amber-500/10 border border-amber-500/30 rounded-lg text-amber-400 text-xs font-medium">
+            <Scan className="w-3.5 h-3.5 text-amber-400" />
+            <span>ROI Active</span>
+          </div>
+
+          <button
+            onClick={resetScan}
+            title="Clear Scan ROI"
+            className="p-1.5 text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 rounded-lg transition-all border border-transparent hover:border-rose-500/30"
+          >
+            <Trash2 className="w-3.5 h-3.5" />
+          </button>
+        </div>
+      )}
 
       {/* Boundary Status Pill */}
       {leaseBoundary && (

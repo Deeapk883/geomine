@@ -38,6 +38,7 @@ interface MineState {
   setIsCheckingBoundary: (checking: boolean) => void;
   clearLeaseBoundary: () => void;
   resetScan: () => void;
+  clearAll: () => void;
 
   setShowHeatmapOverlay: (show: boolean) => void;
   toggleHeatmapOverlay: () => void;
@@ -75,6 +76,7 @@ export const useMineStore = create<MineState>((set) => ({
   setIsCheckingBoundary: (checking) => set({ isCheckingBoundary: checking }),
   clearLeaseBoundary: () => set({ leaseBoundary: null, encroachmentResult: null }),
   resetScan: () => set({ roiCoordinates: null, scanResults: null, selectedPit: null, inspectData: null, encroachmentResult: null }),
+  clearAll: () => set({ roiCoordinates: null, scanResults: null, selectedPit: null, inspectData: null, leaseBoundary: null, encroachmentResult: null }),
 
   setShowHeatmapOverlay: (show) => set({ showHeatmapOverlay: show }),
   toggleHeatmapOverlay: () => set((state) => ({ showHeatmapOverlay: !state.showHeatmapOverlay })),

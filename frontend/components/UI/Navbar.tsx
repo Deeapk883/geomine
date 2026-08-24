@@ -5,7 +5,7 @@ import { useMineStore } from '../../store/useMineStore';
 
 export const Navbar: React.FC = () => {
   const [online, setOnline] = useState(true);
-  const resetScan = useMineStore((state) => state.resetScan);
+  const clearAll = useMineStore((state) => state.clearAll);
 
   useEffect(() => {
     fetch('http://127.0.0.1:8000/')
@@ -32,8 +32,9 @@ export const Navbar: React.FC = () => {
         </div>
 
         <button
-          onClick={resetScan}
+          onClick={clearAll}
           className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-200 rounded-lg border border-slate-700 transition-all"
+          title="Clear all active ROI, Lease Boundary, Heatmaps, and Analysis"
         >
           <RefreshCw className="w-3.5 h-3.5" />
           <span>Clear Region</span>

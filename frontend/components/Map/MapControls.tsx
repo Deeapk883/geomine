@@ -90,7 +90,8 @@ export const MapControls: React.FC = () => {
           setIsCheckingBoundary(false);
         }
       } else {
-        // Scan ROI Mode
+        // Scan ROI Mode (Remove raw drawn layer so it is rendered by RoiOverlay)
+        map.removeLayer(layer);
         setRoiCoordinates(rawCoords);
         setIsScanning(true);
         
@@ -122,10 +123,16 @@ export const MapControls: React.FC = () => {
       }
     };
 
+    const handleRemove = () => {
+      useMineStore.getState().clearAll();
+    };
+
     map.on('pm:create', handleCreate);
+    map.on('pm:remove', handleRemove);
 
     return () => {
       map.off('pm:create', handleCreate);
+      map.off('pm:remove', handleRemove);
     };
   }, [map, setRoiCoordinates, setIsScanning, setScanStep, setScanResults, setLeaseBoundary, setEncroachmentResult, setIsCheckingBoundary]);
 

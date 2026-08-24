@@ -48,4 +48,29 @@ export interface EncroachmentResponse {
   legal_mined_features: any[];
 }
 
+export interface ChatAnalysis {
+  mined_material: string;
+  confidence: "High" | "Medium" | "Low";
+  visual_findings: string[];
+  location_context: string;
+  summary: string;
+}
+
+export interface ChatResponse {
+  status: string;
+  location: string;
+  analysis: ChatAnalysis;
+}
+
+export interface ChatMessage {
+  id: string;
+  sender: 'user' | 'gemini';
+  timestamp: string;
+  text?: string;
+  location?: string;
+  imagePreview?: string;
+  analysis?: ChatAnalysis;
+}
+
+
 

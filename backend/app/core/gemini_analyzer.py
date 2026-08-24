@@ -1,5 +1,7 @@
 import os
 import json
+import io
+from PIL import Image
 from app.config import settings
 
 def analyze_pit_material(image_bytes: bytes, lat: float, lng: float) -> dict:
@@ -7,7 +9,7 @@ def analyze_pit_material(image_bytes: bytes, lat: float, lng: float) -> dict:
     Sends cropped RGB satellite patch and coordinates to Gemini for material classification.
     """
     api_key = settings.GEMINI_API_KEY or os.getenv("GEMINI_API_KEY")
-    if not api_key:
+    if not api_key or not api_key.strip():
         return {
             "material_name": "Iron Ore / Hematite",
             "confidence": "Medium",
@@ -19,10 +21,8 @@ def analyze_pit_material(image_bytes: bytes, lat: float, lng: float) -> dict:
         }
 
     try:
-        from google import genai
-        from google.genai import types
-
-        client = genai.Client(api_key=api_key)
+        import google.generativeai as genai
+        genai.configure(api_key=api_key.strip())
         
         prompt = f"""
         You are an expert remote sensing geologist.
@@ -41,16 +41,27 @@ def analyze_pit_material(image_bytes: bytes, lat: float, lng: float) -> dict:
         }}
         """
         
-        response = client.models.generate_content(
-            model="gemini-2.5-flash",
-            contents=[
-                types.Part.from_bytes(data=image_bytes, mime_type="image/png"),
-                prompt
-            ],
-            config=types.GenerateContentConfig(response_mime_type="application/json")
-        )
+        contents = []
+        if image_bytes:
+            try:
+                pil_img = Image.open(io.BytesIO(image_bytes))
+                contents.append(pil_img)
+            except Exception:
+                pass
+        contents.append(prompt)
+
+        model = genai.GenerativeModel('gemini-2.5-flash')
+        response = model.generate_content(contents)
         
-        return json.loads(response.text)
+        res_text = response.text.strip()
+        if res_text.startswith("```json"):
+            res_text = res_text[7:]
+        if res_text.startswith("```"):
+            res_text = res_text[3:]
+        if res_text.endswith("```"):
+            res_text = res_text[:-3]
+
+        return json.loads(res_text.strip())
     except Exception as e:
         return {
             "material_name": "Iron Ore / Bauxite",

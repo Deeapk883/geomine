@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ScanResponse, InspectResponse, EncroachmentResponse } from '../types';
+import { ScanResponse, InspectResponse, EncroachmentResponse, ChatResponse } from '../types';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000/api/v1';
 
@@ -40,4 +40,18 @@ export const checkBoundaryEncroachment = async (
   });
   return response.data;
 };
+
+export const analyzeMiningChat = async (
+  image: string | null,
+  location: string,
+  message?: string
+): Promise<ChatResponse> => {
+  const response = await apiClient.post<ChatResponse>('/chat/analyze', {
+    image,
+    location,
+    message: message || '',
+  });
+  return response.data;
+};
+
 

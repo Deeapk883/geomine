@@ -7,6 +7,7 @@ import { SummaryHUD } from '../components/UI/SummaryHUD';
 import { InspectDrawer } from '../components/Inspection/InspectDrawer';
 import { BoundaryToolbar } from '../components/UI/BoundaryToolbar';
 import { EncroachmentAlertHUD } from '../components/UI/EncroachmentAlertHUD';
+import { GeminiChatBot } from '../components/Chat/GeminiChatBot';
 
 // Client-side rendering dynamic import for Leaflet
 const DynamicMap = dynamic(() => import('../components/Map/MapContainer'), {
@@ -32,6 +33,7 @@ export default function Home() {
         <ScanProgress />
         <SummaryHUD />
         <InspectDrawer />
+        <GeminiChatBot />
       </div>
     </main>
   );
