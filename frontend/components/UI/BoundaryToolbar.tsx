@@ -14,7 +14,7 @@ export const BoundaryToolbar: React.FC = () => {
   } = useMineStore();
 
   return (
-    <div className="absolute top-4 left-1/2 -translate-x-1/2 z-[1000] flex items-center gap-2 p-1.5 bg-dark-900/90 backdrop-blur-xl border border-slate-700/80 rounded-2xl shadow-2xl">
+    <div className="absolute top-4 left-16 z-[1000] flex items-center gap-2 p-1.5 bg-dark-900/90 backdrop-blur-xl border border-slate-700/80 rounded-2xl shadow-2xl">
       {/* Mode Switcher Buttons */}
       <div className="flex bg-slate-800/80 p-1 rounded-xl border border-slate-700/60">
         <button

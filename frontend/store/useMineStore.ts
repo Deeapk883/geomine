@@ -20,6 +20,9 @@ interface MineState {
   encroachmentResult: EncroachmentResponse | null;
   isCheckingBoundary: boolean;
 
+  // View Layer Visibility State
+  showHeatmapOverlay: boolean;
+
   setRoiCoordinates: (coords: number[][][] | null) => void;
   setIsScanning: (scanning: boolean) => void;
   setScanStep: (step: string) => void;
@@ -35,6 +38,9 @@ interface MineState {
   setIsCheckingBoundary: (checking: boolean) => void;
   clearLeaseBoundary: () => void;
   resetScan: () => void;
+
+  setShowHeatmapOverlay: (show: boolean) => void;
+  toggleHeatmapOverlay: () => void;
 }
 
 export const useMineStore = create<MineState>((set) => ({
@@ -52,6 +58,8 @@ export const useMineStore = create<MineState>((set) => ({
   encroachmentResult: null,
   isCheckingBoundary: false,
 
+  showHeatmapOverlay: true,
+
   setRoiCoordinates: (coords) => set({ roiCoordinates: coords }),
   setIsScanning: (scanning) => set({ isScanning: scanning }),
   setScanStep: (step: string) => set({ scanStep: step }),
@@ -67,5 +75,8 @@ export const useMineStore = create<MineState>((set) => ({
   setIsCheckingBoundary: (checking) => set({ isCheckingBoundary: checking }),
   clearLeaseBoundary: () => set({ leaseBoundary: null, encroachmentResult: null }),
   resetScan: () => set({ roiCoordinates: null, scanResults: null, selectedPit: null, inspectData: null, encroachmentResult: null }),
+
+  setShowHeatmapOverlay: (show) => set({ showHeatmapOverlay: show }),
+  toggleHeatmapOverlay: () => set((state) => ({ showHeatmapOverlay: !state.showHeatmapOverlay })),
 }));
 

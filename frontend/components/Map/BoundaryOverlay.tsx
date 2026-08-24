@@ -4,7 +4,7 @@ import { Polygon, GeoJSON, Tooltip } from 'react-leaflet';
 import { useMineStore } from '../../store/useMineStore';
 
 export const BoundaryOverlay: React.FC = () => {
-  const { leaseBoundary, encroachmentResult } = useMineStore();
+  const { leaseBoundary, encroachmentResult, showHeatmapOverlay } = useMineStore();
 
   if (!leaseBoundary && !encroachmentResult) return null;
 
@@ -26,7 +26,7 @@ export const BoundaryOverlay: React.FC = () => {
           pathOptions={{
             color: '#10b981',
             fillColor: '#10b981',
-            fillOpacity: 0.15,
+            fillOpacity: showHeatmapOverlay ? 0.15 : 0.05,
             weight: 3,
             dashArray: '6, 6',
           }}
@@ -39,8 +39,8 @@ export const BoundaryOverlay: React.FC = () => {
         </Polygon>
       )}
 
-      {/* 2. Illegal Encroached Mining Polygons (Pulsing Red) */}
-      {encroachmentResult && encroachmentResult.encroached_features && (
+      {/* 2. Illegal Encroached Mining Polygons (Pulsing Red - Visible when Heatmap Overlay is ON) */}
+      {showHeatmapOverlay && encroachmentResult && encroachmentResult.encroached_features && (
         encroachmentResult.encroached_features.map((feature, idx) => (
           <GeoJSON
             key={`encroached_${idx}`}
@@ -61,8 +61,8 @@ export const BoundaryOverlay: React.FC = () => {
         ))
       )}
 
-      {/* 3. Legal Mining Activity Polygons (Emerald) */}
-      {encroachmentResult && encroachmentResult.legal_mined_features && (
+      {/* 3. Legal Mining Activity Polygons (Emerald - Visible when Heatmap Overlay is ON) */}
+      {showHeatmapOverlay && encroachmentResult && encroachmentResult.legal_mined_features && (
         encroachmentResult.legal_mined_features.map((feature, idx) => (
           <GeoJSON
             key={`legal_mined_${idx}`}
