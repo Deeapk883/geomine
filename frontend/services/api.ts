@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ScanResponse, InspectResponse } from '../types';
+import { ScanResponse, InspectResponse, EncroachmentResponse } from '../types';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000/api/v1';
 
@@ -27,3 +27,17 @@ export const inspectPitLocation = async (scanId: string, pitId: string, lat: num
   });
   return response.data;
 };
+
+export const checkBoundaryEncroachment = async (
+  scanCoordinates: number[][][],
+  boundaryCoordinates: number[][][],
+  scanId?: string
+): Promise<EncroachmentResponse> => {
+  const response = await apiClient.post<EncroachmentResponse>('/boundary/check', {
+    scan_coordinates: scanCoordinates,
+    boundary_coordinates: boundaryCoordinates,
+    scan_id: scanId,
+  });
+  return response.data;
+};
+

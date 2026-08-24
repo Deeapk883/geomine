@@ -5,6 +5,7 @@ import { useMineStore } from '../../store/useMineStore';
 import { BasemapSwitcher } from './BasemapSwitcher';
 import { MapControls } from './MapControls';
 import { HeatmapOverlay } from './HeatmapOverlay';
+import { BoundaryOverlay } from './BoundaryOverlay';
 
 const tileProviders = {
   'google-sat': 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
@@ -27,6 +28,7 @@ export const MapContainer: React.FC = () => {
         <TileLayer url={tileProviders[basemap]} maxZoom={20} />
         <MapControls />
         <HeatmapOverlay />
+        <BoundaryOverlay />
       </LeafletMap>
     </div>
   );

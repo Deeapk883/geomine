@@ -5,6 +5,8 @@ import { Navbar } from '../components/UI/Navbar';
 import { ScanProgress } from '../components/UI/ScanProgress';
 import { SummaryHUD } from '../components/UI/SummaryHUD';
 import { InspectDrawer } from '../components/Inspection/InspectDrawer';
+import { BoundaryToolbar } from '../components/UI/BoundaryToolbar';
+import { EncroachmentAlertHUD } from '../components/UI/EncroachmentAlertHUD';
 
 // Client-side rendering dynamic import for Leaflet
 const DynamicMap = dynamic(() => import('../components/Map/MapContainer'), {
@@ -25,6 +27,8 @@ export default function Home() {
       {/* Map area fills remaining space — all floating HUDs are positioned relative to this */}
       <div className="relative flex-1 overflow-hidden">
         <DynamicMap />
+        <BoundaryToolbar />
+        <EncroachmentAlertHUD />
         <ScanProgress />
         <SummaryHUD />
         <InspectDrawer />

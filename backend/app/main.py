@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers import scan, inspect
+from app.routers import scan, inspect, boundary
 
 app = FastAPI(
     title="GeoMine AI API",
@@ -20,6 +20,7 @@ app.add_middleware(
 # Register Router Endpoints
 app.include_router(scan.router, prefix="/api/v1", tags=["Scanning"])
 app.include_router(inspect.router, prefix="/api/v1", tags=["Inspection"])
+app.include_router(boundary.router, prefix="/api/v1", tags=["Boundary Geofencing"])
 
 @app.get("/")
 def health_check():

@@ -31,3 +31,21 @@ export interface InspectResponse {
   material_analysis: MaterialAnalysis;
 }
 
+export interface AreaMetrics {
+  m2: number;
+  ha: number;
+  km2: number;
+}
+
+export interface EncroachmentResponse {
+  status: string;
+  violation_detected: boolean;
+  severity: "COMPLIANT" | "WARNING" | "CRITICAL";
+  permitted_lease_area: AreaMetrics;
+  legal_mined_area: AreaMetrics;
+  encroached_area: AreaMetrics;
+  encroached_features: any[]; // GeoJSON Feature geometries
+  legal_mined_features: any[];
+}
+
+

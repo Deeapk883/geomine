@@ -1,7 +1,8 @@
 import { create } from 'zustand';
-import { ScanResponse, InspectResponse, HotspotItem } from '../types';
+import { ScanResponse, InspectResponse, HotspotItem, EncroachmentResponse } from '../types';
 
 export type BasemapType = 'google-sat' | 'google-hybrid' | 'osm';
+export type DrawingModeType = 'roi' | 'boundary';
 
 interface MineState {
   roiCoordinates: number[][][] | null;
@@ -13,6 +14,12 @@ interface MineState {
   isInspecting: boolean;
   basemap: BasemapType;
 
+  // Boundary Monitoring State
+  leaseBoundary: number[][][] | null;
+  drawingMode: DrawingModeType;
+  encroachmentResult: EncroachmentResponse | null;
+  isCheckingBoundary: boolean;
+
   setRoiCoordinates: (coords: number[][][] | null) => void;
   setIsScanning: (scanning: boolean) => void;
   setScanStep: (step: string) => void;
@@ -21,6 +28,12 @@ interface MineState {
   setInspectData: (data: InspectResponse | null) => void;
   setIsInspecting: (inspecting: boolean) => void;
   setBasemap: (basemap: BasemapType) => void;
+
+  setLeaseBoundary: (coords: number[][][] | null) => void;
+  setDrawingMode: (mode: DrawingModeType) => void;
+  setEncroachmentResult: (res: EncroachmentResponse | null) => void;
+  setIsCheckingBoundary: (checking: boolean) => void;
+  clearLeaseBoundary: () => void;
   resetScan: () => void;
 }
 
@@ -34,6 +47,11 @@ export const useMineStore = create<MineState>((set) => ({
   isInspecting: false,
   basemap: 'google-sat',
 
+  leaseBoundary: null,
+  drawingMode: 'roi',
+  encroachmentResult: null,
+  isCheckingBoundary: false,
+
   setRoiCoordinates: (coords) => set({ roiCoordinates: coords }),
   setIsScanning: (scanning) => set({ isScanning: scanning }),
   setScanStep: (step: string) => set({ scanStep: step }),
@@ -42,6 +60,12 @@ export const useMineStore = create<MineState>((set) => ({
   setInspectData: (data) => set({ inspectData: data }),
   setIsInspecting: (inspecting) => set({ isInspecting: inspecting }),
   setBasemap: (basemap) => set({ basemap }),
-  resetScan: () => set({ roiCoordinates: null, scanResults: null, selectedPit: null, inspectData: null }),
+
+  setLeaseBoundary: (coords) => set({ leaseBoundary: coords }),
+  setDrawingMode: (mode) => set({ drawingMode: mode }),
+  setEncroachmentResult: (res) => set({ encroachmentResult: res }),
+  setIsCheckingBoundary: (checking) => set({ isCheckingBoundary: checking }),
+  clearLeaseBoundary: () => set({ leaseBoundary: null, encroachmentResult: null }),
+  resetScan: () => set({ roiCoordinates: null, scanResults: null, selectedPit: null, inspectData: null, encroachmentResult: null }),
 }));
 

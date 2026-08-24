@@ -48,8 +48,8 @@ def scan_roi(payload: ScanRequest):
         _, H, W = img_9band_array.shape
         transform_matrix = from_bounds(min_lng, min_lat, max_lng, max_lat, max(1, W), max(1, H))
             
-        heatmap_image = heatmap_to_png_overlay(heatmap)
-        hotspots, total_area_km2 = extract_hotspots_from_heatmap(heatmap, transform_matrix)
+        heatmap_image = heatmap_to_png_overlay(heatmap, transform_matrix=transform_matrix, roi_coords=payload.coordinates)
+        hotspots, total_area_km2 = extract_hotspots_from_heatmap(heatmap, transform_matrix=transform_matrix, roi_coords=payload.coordinates)
 
         # 5. Build Final Response
         scan_id = f"scan_{uuid.uuid4().hex[:8]}"
