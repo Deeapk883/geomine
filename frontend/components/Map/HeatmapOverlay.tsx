@@ -23,7 +23,7 @@ export const HeatmapOverlay: React.FC = () => {
       )}
 
       {/* Heatmap Legend Floating Bar */}
-      <div className="leaflet-bottom leaflet-right mb-8 mr-6 pointer-events-auto flex flex-col items-end gap-2.5 z-[1000]">
+      <div className="absolute bottom-28 left-6 pointer-events-auto flex flex-col items-start gap-2.5 z-[1000]">
         <div className="bg-dark-900/90 backdrop-blur-xl border border-slate-700/70 p-3 rounded-xl shadow-2xl w-56 text-xs font-mono">
           <div className="flex justify-between text-slate-300 font-semibold mb-1.5 text-[10px] uppercase tracking-wider">
             <span>Mine Density Heatmap</span>

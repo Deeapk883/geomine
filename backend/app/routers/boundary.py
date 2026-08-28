@@ -46,8 +46,8 @@ def check_boundary(payload: BoundaryCheckRequest):
             transform_matrix=transform_matrix,
             boundary_coords=payload.boundary_coordinates,
             roi_coords=payload.scan_coordinates,
-            threshold=payload.threshold if payload.threshold is not None else 0.35,
-            min_area_m2=payload.min_area_m2 if payload.min_area_m2 is not None else 250.0
+            threshold=payload.threshold,
+            min_area_m2=payload.min_area_m2
         )
 
         return result

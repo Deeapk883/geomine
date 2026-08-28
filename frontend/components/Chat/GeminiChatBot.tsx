@@ -1,16 +1,14 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   Sparkles,
   X,
   Send,
   UploadCloud,
   MapPin,
-  Image as ImageIcon,
   Loader2,
   Pickaxe,
-  MessageSquare,
   Trash2,
   CheckCircle2,
   Bot
@@ -18,6 +16,13 @@ import {
 import { useMineStore } from '../../store/useMineStore';
 import { analyzeMiningChat } from '../../services/api';
 import { ChatMessage } from '../../types';
+
+const WELCOME_MESSAGE: ChatMessage = {
+  id: 'welcome-msg',
+  sender: 'gemini',
+  timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+  text: 'Hello! I am your GeoLens Intelligence Assistant. Drop a map screenshot or pit image and specify the rough location/area — I will identify what is being mined!'
+};
 
 export const GeminiChatBot: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,14 +32,7 @@ export const GeminiChatBot: React.FC = () => {
   const [imageFileName, setImageFileName] = useState<string>('');
   const [isAnalyzing, setIsAnalyzing] = useState(false);
 
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    {
-      id: 'welcome-msg',
-      sender: 'gemini',
-      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      text: 'Hello! I am your GeoLens Intelligence Assistant. Drop a map screenshot or pit image and specify the rough location/area — I will identify what is being mined!'
-    }
-  ]);
+  const [messages, setMessages] = useState<ChatMessage[]>([WELCOME_MESSAGE]);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -44,6 +42,12 @@ export const GeminiChatBot: React.FC = () => {
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
+
+  useEffect(() => {
+    if (isOpen) {
+      scrollToBottom();
+    }
+  }, [messages.length, isOpen]);
 
   // Handle image file selection / drop
   const handleImageFile = (file: File) => {
@@ -178,14 +182,7 @@ export const GeminiChatBot: React.FC = () => {
 
             <div className="flex items-center gap-1">
               <button
-                onClick={() => setMessages([
-                  {
-                    id: 'welcome-msg',
-                    sender: 'gemini',
-                    timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-                    text: 'Hello! I am your GeoLens Intelligence Assistant. Drop a map screenshot or pit image and specify the rough location/area — I will identify what is being mined!'
-                  }
-                ])}
+                onClick={() => setMessages([WELCOME_MESSAGE])}
                 className="p-1.5 hover:bg-slate-700/60 text-slate-400 hover:text-slate-200 rounded-lg transition-colors"
                 title="Clear Chat History"
               >

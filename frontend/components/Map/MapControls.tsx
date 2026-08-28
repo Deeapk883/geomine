@@ -54,6 +54,7 @@ export const MapControls: React.FC = () => {
       position: 'topleft',
       drawPolygon: true,
       drawRectangle: true,
+      drawMarker: false,
       drawCircleMarker: false,
       drawPolyline: false,
       drawCircle: false,
@@ -67,6 +68,13 @@ export const MapControls: React.FC = () => {
     const handleCreate = async (e: any) => {
       const layer = e.layer;
       const geojson = layer.toGeoJSON();
+
+      if (geojson.geometry.type !== 'Polygon' && geojson.geometry.type !== 'MultiPolygon') {
+        alert('Please use the Polygon or Rectangle tool to draw a region of interest.');
+        map.removeLayer(layer);
+        return;
+      }
+
       const rawCoords = geojson.geometry.coordinates;
 
       const currentMode = useMineStore.getState().drawingMode;

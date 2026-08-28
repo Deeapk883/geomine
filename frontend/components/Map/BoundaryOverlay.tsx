@@ -9,10 +9,16 @@ export const BoundaryOverlay: React.FC = () => {
   if (!leaseBoundary && !encroachmentResult) return null;
 
   // Convert GeoJSON [[[lng, lat], ...]] coordinates to Leaflet positions [[[lat, lng], ...]]
-  const getLeafletPositions = (coords: number[][][]) => {
-    if (!coords || !coords.length) return [];
-    const ring = coords[0] || coords;
-    return ring.map((pt) => [pt[1], pt[0]] as [number, number]);
+  const getLeafletPositions = (coords: any) => {
+    if (!coords || !Array.isArray(coords) || !coords.length) return [];
+    let ring: any = coords;
+    if (Array.isArray(ring[0]) && Array.isArray(ring[0][0])) {
+      ring = ring[0];
+    }
+    if (!Array.isArray(ring) || !Array.isArray(ring[0]) || typeof ring[0][0] !== 'number') {
+      return [];
+    }
+    return ring.map((pt: any) => [pt[1], pt[0]] as [number, number]);
   };
 
   const boundaryPositions = leaseBoundary ? getLeafletPositions(leaseBoundary) : [];

@@ -8,13 +8,15 @@ import { HeatmapOverlay } from './HeatmapOverlay';
 import { BoundaryOverlay } from './BoundaryOverlay';
 import { RoiOverlay } from './RoiOverlay';
 
+import { RegionSearch } from './RegionSearch';
+
 const tileProviders = {
   'google-sat': 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
   'google-hybrid': 'https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}',
   'osm': 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
 };
 
-export const MapContainer: React.FC = () => {
+const MapContainer: React.FC = () => {
   const { basemap } = useMineStore();
 
   return (
@@ -28,6 +30,7 @@ export const MapContainer: React.FC = () => {
       >
         <TileLayer url={tileProviders[basemap]} maxZoom={20} />
         <MapControls />
+        <RegionSearch />
         <RoiOverlay />
         <HeatmapOverlay />
         <BoundaryOverlay />

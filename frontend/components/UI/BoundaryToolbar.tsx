@@ -22,11 +22,10 @@ export const BoundaryToolbar: React.FC = () => {
       <div className="flex bg-slate-800/80 p-1 rounded-xl border border-slate-700/60">
         <button
           onClick={() => setDrawingMode('roi')}
-          className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-            drawingMode === 'roi'
+          className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${drawingMode === 'roi'
               ? 'bg-amber-500 text-slate-950 shadow-md font-bold'
               : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
-          }`}
+            }`}
         >
           <Scan className="w-3.5 h-3.5" />
           <span>Scan ROI Mode</span>
@@ -34,11 +33,10 @@ export const BoundaryToolbar: React.FC = () => {
 
         <button
           onClick={() => setDrawingMode('boundary')}
-          className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-            drawingMode === 'boundary'
+          className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${drawingMode === 'boundary'
               ? 'bg-emerald-500 text-slate-950 shadow-md font-bold'
               : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
-          }`}
+            }`}
         >
           <Shield className="w-3.5 h-3.5" />
           <span>Draw Lease Boundary</span>
@@ -81,22 +79,7 @@ export const BoundaryToolbar: React.FC = () => {
         </div>
       )}
 
-      {/* Violation Quick Alert Badge */}
-      {encroachmentResult && (
-        <div className="pl-1 border-l border-slate-700/60">
-          {encroachmentResult.violation_detected ? (
-            <div className="flex items-center gap-1.5 px-3 py-1 bg-rose-500/20 border border-rose-500/50 text-rose-400 rounded-lg text-xs font-bold animate-pulse">
-              <AlertTriangle className="w-3.5 h-3.5" />
-              <span>Violation ({encroachmentResult.encroached_area.ha} ha)</span>
-            </div>
-          ) : (
-            <div className="flex items-center gap-1.5 px-3 py-1 bg-emerald-500/20 border border-emerald-500/50 text-emerald-400 rounded-lg text-xs font-bold">
-              <ShieldCheck className="w-3.5 h-3.5" />
-              <span>Compliant</span>
-            </div>
-          )}
-        </div>
-      )}
+
 
       {isCheckingBoundary && (
         <div className="flex items-center gap-1.5 px-2.5 py-1 text-slate-400 text-xs font-mono animate-pulse">

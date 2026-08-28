@@ -76,7 +76,7 @@ export const useMineStore = create<MineState>((set) => ({
   setIsCheckingBoundary: (checking) => set({ isCheckingBoundary: checking }),
   clearLeaseBoundary: () => set({ leaseBoundary: null, encroachmentResult: null }),
   resetScan: () => set({ roiCoordinates: null, scanResults: null, selectedPit: null, inspectData: null, encroachmentResult: null }),
-  clearAll: () => set({ roiCoordinates: null, scanResults: null, selectedPit: null, inspectData: null, leaseBoundary: null, encroachmentResult: null }),
+  clearAll: () => set({ roiCoordinates: null, scanResults: null, selectedPit: null, inspectData: null, leaseBoundary: null, encroachmentResult: null, isScanning: false, isInspecting: false, isCheckingBoundary: false, showHeatmapOverlay: true }),
 
   setShowHeatmapOverlay: (show) => set({ showHeatmapOverlay: show }),
   toggleHeatmapOverlay: () => set((state) => ({ showHeatmapOverlay: !state.showHeatmapOverlay })),

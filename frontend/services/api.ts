@@ -53,5 +53,3 @@ export const analyzeMiningChat = async (
   });
   return response.data;
 };
-
-

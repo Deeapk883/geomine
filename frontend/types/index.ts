@@ -71,6 +71,3 @@ export interface ChatMessage {
   imagePreview?: string;
   analysis?: ChatAnalysis;
 }
-
-
-

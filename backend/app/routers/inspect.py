@@ -6,12 +6,6 @@ from PIL import Image
 import numpy as np
 from app.core.gemini_analyzer import analyze_pit_material
 
-try:
-    ee.Initialize()
-except Exception:
-    ee.Authenticate()
-    ee.Initialize()
-
 router = APIRouter()
 
 class InspectRequest(BaseModel):

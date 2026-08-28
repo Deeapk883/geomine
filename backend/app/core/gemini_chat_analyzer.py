@@ -3,7 +3,12 @@ import json
 import io
 from typing import Optional
 from PIL import Image
+from dotenv import load_dotenv
+import google.generativeai as genai
 from app.config import settings
+from app.core.utils import strip_gemini_json_fences
+
+load_dotenv()
 
 def analyze_chat_mining_request(image_bytes: Optional[bytes], location: str, message: str) -> dict:
     """
@@ -17,8 +22,8 @@ def analyze_chat_mining_request(image_bytes: Optional[bytes], location: str, mes
     # Attempt live Gemini Multimodal API Call if API key is present
     if api_key and api_key.strip():
         try:
-            import google.generativeai as genai
             genai.configure(api_key=api_key.strip())
+            model = genai.GenerativeModel('gemini-2.5-flash')
 
             prompt = f"""
 You are GeoMine AI, an expert remote sensing geologist and satellite imagery analysis assistant.
@@ -47,28 +52,18 @@ Return your response strictly as valid JSON with this exact schema:
   "summary": "Clear, direct 2-3 sentence answer giving primary weight to the image evidence."
 }}
 """
-            contents = []
+            contents = [prompt]
             if image_bytes:
                 try:
                     pil_img = Image.open(io.BytesIO(image_bytes))
                     contents.append(pil_img)
                 except Exception as img_err:
                     print(f"[Image decoding warning]: {img_err}", flush=True)
-            
-            contents.append(prompt)
 
-            model = genai.GenerativeModel('gemini-2.5-flash')
             response = model.generate_content(contents)
 
-            res_text = response.text.strip()
-            if res_text.startswith("```json"):
-                res_text = res_text[7:]
-            if res_text.startswith("```"):
-                res_text = res_text[3:]
-            if res_text.endswith("```"):
-                res_text = res_text[:-3]
-
-            return json.loads(res_text.strip())
+            res_text = strip_gemini_json_fences(response.text)
+            return json.loads(res_text)
         except Exception as e:
             print(f"[Gemini API Call Exception - using fallback]: {e}", flush=True)
 

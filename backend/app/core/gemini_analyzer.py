@@ -2,7 +2,12 @@ import os
 import json
 import io
 from PIL import Image
+from dotenv import load_dotenv
+import google.generativeai as genai
 from app.config import settings
+from app.core.utils import strip_gemini_json_fences
+
+load_dotenv()
 
 def analyze_pit_material(image_bytes: bytes, lat: float, lng: float) -> dict:
     """
@@ -17,12 +22,12 @@ def analyze_pit_material(image_bytes: bytes, lat: float, lng: float) -> dict:
                 "Reddish-brown surface reflectance typical of high-grade iron ore / laterite deposits.",
                 "Geographic coordinates match active mining corridor in Bellary/Hospet region."
             ],
-            "note": "Add GEMINI_API_KEY in backend/.env to activate live Gemini 2.5 Multimodal classification."
+            "note": "Add GEMINI_API_KEY in backend/.env to activate live Gemini Multimodal classification."
         }
 
     try:
-        import google.generativeai as genai
         genai.configure(api_key=api_key.strip())
+        model = genai.GenerativeModel('gemini-2.5-flash')
         
         prompt = f"""
         You are an expert remote sensing geologist.
@@ -41,27 +46,18 @@ def analyze_pit_material(image_bytes: bytes, lat: float, lng: float) -> dict:
         }}
         """
         
-        contents = []
+        contents = [prompt]
         if image_bytes:
             try:
                 pil_img = Image.open(io.BytesIO(image_bytes))
                 contents.append(pil_img)
             except Exception:
                 pass
-        contents.append(prompt)
 
-        model = genai.GenerativeModel('gemini-2.5-flash')
         response = model.generate_content(contents)
         
-        res_text = response.text.strip()
-        if res_text.startswith("```json"):
-            res_text = res_text[7:]
-        if res_text.startswith("```"):
-            res_text = res_text[3:]
-        if res_text.endswith("```"):
-            res_text = res_text[:-3]
-
-        return json.loads(res_text.strip())
+        res_text = strip_gemini_json_fences(response.text)
+        return json.loads(res_text)
     except Exception as e:
         return {
             "material_name": "Iron Ore / Bauxite",

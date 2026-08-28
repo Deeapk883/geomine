@@ -6,10 +6,22 @@ import { useMineStore } from '../../store/useMineStore';
 export const RoiOverlay: React.FC = () => {
   const roiCoordinates = useMineStore((state) => state.roiCoordinates);
 
-  if (!roiCoordinates || !roiCoordinates.length) return null;
+  if (!roiCoordinates || !Array.isArray(roiCoordinates) || !roiCoordinates.length) return null;
 
-  const ring = roiCoordinates[0] || roiCoordinates;
-  const positions = ring.map((pt) => [pt[1], pt[0]] as [number, number]);
+  // Safely unwrap GeoJSON polygon coordinate array
+  let ring: any = roiCoordinates;
+
+  // If 3D array [[[lng, lat], ...]], get the outer ring
+  if (Array.isArray(ring[0]) && Array.isArray(ring[0][0])) {
+    ring = ring[0];
+  }
+
+  // Ensure ring is a 2D array of [lng, lat] points
+  if (!Array.isArray(ring) || !Array.isArray(ring[0]) || typeof ring[0][0] !== 'number') {
+    return null;
+  }
+
+  const positions = ring.map((pt: any) => [pt[1], pt[0]] as [number, number]);
 
   return (
     <Polygon
@@ -31,4 +43,3 @@ export const RoiOverlay: React.FC = () => {
   );
 };
 
-export default RoiOverlay;
