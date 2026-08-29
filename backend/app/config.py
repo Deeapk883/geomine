@@ -15,10 +15,18 @@ class Settings(BaseSettings):
     # API Keys
     GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")
     
-    # Paths (matches your singular 'weight/' folder)
+    # Paths (checks root 'weigh/' or local 'weight/' directory)
     BASE_DIR: str = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    MODEL_WEIGHTS_PATH: str = os.path.join(BASE_DIR, "weight", "best_efficientnet_b0.pth")
-    NORM_STATS_PATH: str = os.path.join(BASE_DIR, "weight", "norm_stats.pt")
+    MODEL_WEIGHTS_PATH: str = os.getenv(
+        "MODEL_WEIGHTS_PATH", 
+        os.path.join(BASE_DIR, "weight", "best_efficientnet_b0.pth") if os.path.exists(os.path.join(BASE_DIR, "weight")) 
+        else os.path.join(os.path.dirname(BASE_DIR), "weigh", "best_efficientnet_b0.pth")
+    )
+    NORM_STATS_PATH: str = os.getenv(
+        "NORM_STATS_PATH",
+        os.path.join(BASE_DIR, "weight", "norm_stats.pt") if os.path.exists(os.path.join(BASE_DIR, "weight"))
+        else os.path.join(os.path.dirname(BASE_DIR), "weigh", "norm_stats.pt")
+    )
     
     # Inference Parameters
     PATCH_SIZE: int = 32
