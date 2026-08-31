@@ -24,5 +24,6 @@ app.include_router(boundary.router, prefix="/api/v1", tags=["Boundary Geofencing
 app.include_router(chat.router, prefix="/api/v1", tags=["Gemini Chat"])
 
 @app.get("/")
+@app.get("/api/v1/health")
 def health_check():
     return {"status": "online", "message": "GeoMine AI Engine Running"}

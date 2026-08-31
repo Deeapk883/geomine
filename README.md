@@ -155,10 +155,17 @@ Ensure you have the following installed on your system:
    ```
 
 4. **Run the development server**:
-   ```bash
-   npm run dev
-   ```
-   Open `http://localhost:3000` in your browser to launch the GeoMine interface.
+   - **Localhost only**:
+     ```bash
+     npm run dev
+     ```
+     Open `http://localhost:3000` in your browser.
+
+   - **Local Network access (Mobile/Other devices on Wi-Fi)**:
+     ```bash
+     npm run dev:network
+     ```
+     Access via `http://<YOUR_LOCAL_IP>:3000` (e.g., `http://192.168.1.5:3000`).
 
 ---
 

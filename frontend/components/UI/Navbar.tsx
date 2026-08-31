@@ -8,7 +8,12 @@ export const Navbar: React.FC = () => {
   const clearAll = useMineStore((state) => state.clearAll);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/')
+    const apiBase = process.env.NEXT_PUBLIC_API_URL || '/api/v1';
+    fetch(`${apiBase}/health`, {
+      headers: {
+        'ngrok-skip-browser-warning': 'true',
+      },
+    })
       .then((res) => setOnline(res.ok))
       .catch(() => setOnline(false));
   }, []);

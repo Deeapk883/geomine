@@ -96,7 +96,7 @@ def run_sliding_window_inference(img_9band: np.ndarray) -> np.ndarray:
             coords.append((y, y_end, x, x_end))
             
     if patches:
-        batch_size = 64
+        batch_size = 128
         with torch.no_grad():
             for i in range(0, len(patches), batch_size):
                 batch_patches = torch.stack(patches[i:i + batch_size])
